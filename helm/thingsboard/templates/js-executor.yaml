@@ -65,9 +65,11 @@ spec:
           - name: REMOTE_JS_EVAL_REQUEST_TOPIC
             value: "js_eval.requests"
           - name: TB_KAFKA_SERVERS
-            value: "{{ .Release.Name }}-kafka:{{ .Values.kafka.service.ports.client }}"
+            # value: "{{ .Release.Name }}-kafka:{{ .Values.kafka.service.ports.client }}" # ORIGINAL
+            value: "kafka-controller-0.kafka-controller-headless.bluestar.svc.cluster.local:9092,kafka-controller-1.kafka-controller-headless.bluestar.svc.cluster.local:9092,kafka-controller-2.kafka-controller-headless.bluestar.svc.cluster.local:9092" # ADDED
           - name: TB_QUEUE_KAFKA_REPLICATION_FACTOR
-            value: "{{ .Values.kafka.offsetsTopicReplicationFactor }}"
+            # value: "{{ .Values.kafka.offsetsTopicReplicationFactor }}" # ORIGINAL
+            value: "1" # ADDED
           - name: LOGGER_LEVEL
             value: "info"
           - name: LOG_FOLDER

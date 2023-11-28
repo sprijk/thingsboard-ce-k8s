@@ -29,6 +29,7 @@ data:
       export JAVA_OPTS="$JAVA_OPTS -XX:-UseBiasedLocking -XX:+UseTLAB -XX:+ResizeTLAB -XX:+PerfDisableSharedMem -XX:+UseCondCardMark"
       export JAVA_OPTS="$JAVA_OPTS -XX:+UseG1GC -XX:MaxGCPauseMillis=500 -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled -XX:MaxTenuringThreshold=10"
       export JAVA_OPTS="$JAVA_OPTS -XX:+ExitOnOutOfMemoryError -XX:+UseContainerSupport -XX:MaxRAMPercentage=80"
+      export JAVA_OPTS="$JAVA_OPTS -Xms256M -Xmx256M"
       export LOG_FILENAME=thingsboard.out
       export LOADER_PATH=/usr/share/thingsboard/conf,/usr/share/thingsboard/extensions
   logback: |

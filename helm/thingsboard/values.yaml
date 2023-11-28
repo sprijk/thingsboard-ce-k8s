@@ -17,7 +17,8 @@
 global:
   image:
     server: docker.io
-    tag: "3.5.1"
+    # tag: "3.5.1" # ORIGINAL
+    tag: "3.6.1" # ADDED
     pullSecrets: []
     pullPolicy: Always
   jsonLogs: false
@@ -27,7 +28,8 @@ fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+  # create: true # ORIGINAL
+  create: false # ADDED
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
@@ -35,15 +37,23 @@ serviceAccount:
   name: ""
 
 ingress:
-  enabled: false
-  annotations: {}
+  # enabled: false # ORIGINAL
+  enabled: true # ADDED
+  annotations:
+    # {} # ORIGINAL
+    alb.ingress.kubernetes.io/scheme: internet-facing # ADDED
+    alb.ingress.kubernetes.io/group.name: external-starsensors-io # ADDED
+    alb.ingress.kubernetes.io/target-type: ip # ADDED
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":80},{"HTTPS":443}]' # ADDED
+    alb.ingress.kubernetes.io/ssl-redirect: "443" # ADDED
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - chart-example.local
+    # - chart-example.local # ORIGINAL
+    - things.bluestar.starsensors.io # ADDED
   # Enable or disable tls, same host as above
   tls: false
-  
+
 # set to true to enable monitoring with prometheus
 # endpoints in all services, refer to the Metrics
 # section in https://thingsboard.io/docs/user-guide/troubleshooting/
@@ -68,9 +78,11 @@ node:
     "prometheus.io/path": "/actuator/prometheus"
     "prometheus.io/port": "8080"
     "prometheus.io/scrape": "true"
-  podSecurityContext: {}
+  podSecurityContext:
+    {}
     # fsGroup: 2000
-  securityContext: {}
+  securityContext:
+    {}
     # capabilities:
     #   drop:
     #   - ALL
@@ -78,11 +90,13 @@ node:
     # runAsNonRoot: true
     # runAsUser: 1000
   service:
-    type: ClusterIP
+    type: ClusterIP # ORIGINAL
+    # type: NodePort # ADDED
     port: 8080
   state:
     defaultInactivityTimeoutInSec: "600"
-  resources: {}
+  resources:
+    {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -117,7 +131,8 @@ jsexecutor:
     #server: docker.io
     #pullPolicy: Always
     #tag: "X.Y.Z"
-  replicaCount: 5
+  # replicaCount: 5 # ORIGINAL
+  replicaCount: 2 # ADDED
   podAnnotations: {}
   podSecurityContext: {}
   securityContext: {}
@@ -141,7 +156,8 @@ mqtt:
     #server: docker.io
     #pullPolicy: Always
     #tag: "X.Y.Z"
-  replicaCount: 1
+  # replicaCount: 1 # ORIGINAL
+  replicaCount: 0 # ADDED
   ssl:
     enabled: false
     secret: kubernetes-secret
@@ -163,7 +179,8 @@ mqtt:
   securityContext: {}
   service:
     ipv6: false
-    type: ClusterIP
+    type: ClusterIP # ORIGINAL
+    # type: NodePort # ADDED
     port: 8883
     # ClusterIP service assings random nodePort when created, can be set to desired value here
     # nodePort: 30883
@@ -205,7 +222,8 @@ http:
   podSecurityContext: {}
   securityContext: {}
   service:
-    type: ClusterIP
+    type: ClusterIP # ORIGINAL
+    # type: NodePort # ADDED
     port: 8082
     additionalPorts: []
   resources: {}
@@ -229,7 +247,8 @@ coap:
     #server: docker.io
     #pullPolicy: Always
     #tag: "X.Y.Z"
-  replicaCount: 1
+  # replicaCount: 1 # ORIGINAL
+  replicaCount: 0 # ADDED
   port:
     number: 8083
     protocol: UDP
@@ -272,7 +291,8 @@ webui:
   podSecurityContext: {}
   securityContext: {}
   service:
-    type: ClusterIP
+    type: ClusterIP # ORIGINAL
+    # type: NodePort # ADDED
     port: 8084
     additionalPorts: []
   resources: {}
@@ -295,7 +315,7 @@ cassandraInitDB:
 
 initDBJob:
   # Set this value with current version of Thingsboard database if only if a database migration is needed.
-  # Database migration will be triggered starting at this version up to version currently installed by the helm command. 
+  # Database migration will be triggered starting at this version up to version currently installed by the helm command.
   fromVersion: ""
   # Constrain Pods to nodes with specific labels
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
@@ -314,7 +334,8 @@ postgresInitDB:
       timeout: 3
 
 timescale:
-  enabled: false
+  # enabled: false
+  enabled: true
 
 cassandra:
   # Database can be either postgres or hybrid (entities in postgres and timeseries in cassandra)
@@ -325,15 +346,16 @@ cassandra:
   dbUser:
     password: setplease
   extraEnvVars:
-  - name: JVM_OPTS
-    value: "-Dcom.sun.management.jmxremote.authenticate=true -Dcassandra.jmx.remote.login.config=CassandraLogin -Djava.security.auth.login.config=/opt/bitnami/cassandra/conf/cassandra-jaas.config -Dcassandra.jmx.authorizer=org.apache.cassandra.auth.jmx.AuthorizationProxy -Dcassandra.jmx.remote.port=7199"
+    - name: JVM_OPTS
+      value: "-Dcom.sun.management.jmxremote.authenticate=true -Dcassandra.jmx.remote.login.config=CassandraLogin -Djava.security.auth.login.config=/opt/bitnami/cassandra/conf/cassandra-jaas.config -Dcassandra.jmx.authorizer=org.apache.cassandra.auth.jmx.AuthorizationProxy -Dcassandra.jmx.remote.port=7199"
 
 # Configuration for an external database if it's not desired to deploy
 # and use one internally in the cluster. These values will only be
 # used if postgresql-ha.enabled is false.
 postgresqlExternal:
   # INPUT NEEDED if postgresql-ha.enabled is false
-  hostname: setplease
+  # hostname: setplease # ORIGINAL
+  hostname: timescale.bluestar.svc.cluster.local # ADDED
   # INPUT NEEDED if postgresql-ha.enabled is false
   port: 5432
   # INPUT NEEDED if postgresql-ha.enabled is false
@@ -344,7 +366,8 @@ postgresqlExternal:
   password: setplease
 
 postgresql-ha:
-  enabled: true
+  # enabled: true # ORIGINAL
+  enabled: false # ADDED
   nameOverride: pg
   postgresql:
     database: thingsboard
@@ -379,9 +402,14 @@ redis:
 kafka:
   persistence:
     enabled: false
+  service: # ADDED
+    ports: # ADDED
+      client: 9092 # ADDED
   zookeeper:
     persistence:
       enabled: false
+    containerPorts: # ADDED
+      client: 2181 # ADDED
 
 sql:
   attributes:
