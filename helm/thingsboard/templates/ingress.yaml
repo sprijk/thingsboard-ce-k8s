@@ -117,15 +117,19 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ $releaseName }}-webui
+                # name: {{ $releaseName }}-webui # ORIGINAL
+                name: {{ $releaseName }}-node # ADDED
                 port:
-                  number: {{ $values.webui.service.port }}
+                  # number: {{ $values.webui.service.port }} # ORIGINAL
+                  number: {{ $values.node.service.port }} # ADDED
           - path: /.*
             pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ $releaseName }}-webui
+                # name: {{ $releaseName }}-webui # ORIGINAL
+                name: {{ $releaseName }}-node # ADDED
                 port:
-                  number: {{ $values.webui.service.port }}
+                  # number: {{ $values.webui.service.port }} # ORIGINAL
+                  number: {{ $values.node.service.port }} # ADDED
     {{- end }}
 {{- end }}
