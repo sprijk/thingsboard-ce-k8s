@@ -117,6 +117,16 @@ spec:
             value: "redis-master.bluestar.svc.cluster.local" # ADDED
           # - name: REDIS_PASSWORD # ORIGINAL
           #   value: "{{ .Values.redis.auth.password }}" # ORIGINAL
+          - name: HTTP_ENABLED # ADDED (see tb-services.yml in aws/microservices)
+            value: "false" # ADDED (see tb-services.yml in aws/microservices)
+          - name: MQTT_ENABLED # ADDED (see tb-services.yml in aws/microservices)
+            value: "false" # ADDED (see tb-services.yml in aws/microservices)
+          - name: COAP_ENABLED # ADDED (see tb-services.yml in aws/microservices)
+            value: "false" # ADDED (see tb-services.yml in aws/microservices)
+          - name: SNMP_ENABLED # ADDED (see tb-services.yml in aws/microservices)
+            value: "false" # ADDED (see tb-services.yml in aws/microservices)
+          - name: LWM2M_ENABLED # ADDED (see tb-services.yml in aws/microservices)
+            value: "false" # ADDED (see tb-services.yml in aws/microservices)
           - name: JWT_TOKEN_EXPIRATION_TIME
             value: {{ .Values.node.authorization.tokenExpirationTimeSeconds | default 9000 | quote }}
           - name: JWT_REFRESH_TOKEN_EXPIRATION_TIME
