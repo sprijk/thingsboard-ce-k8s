@@ -43,89 +43,89 @@ spec:
     - host: {{ . | quote }}
       http:
          paths:
-          - path: /api/v1/.*
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $releaseName }}-http
-                port:
-                  number: {{ $values.http.service.port }}
-          - path: /api/.*
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $releaseName }}-node
-                port:
-                  number: {{ $values.node.service.port }}
-          - path: /swagger.*
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $releaseName }}-node
-                port:
-                  number: {{ $values.node.service.port }}
-          - path: /webjars.*
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $releaseName }}-node
-                port:
-                  number: {{ $values.node.service.port }}
-          - path: /v2/.*
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $releaseName }}-node
-                port:
-                  number: {{ $values.node.service.port }}
-          - path: /v3/.*
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $releaseName }}-node
-                port:
-                  number: {{ $values.node.service.port }}
-          - path: /static/rulenode/.*
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $releaseName }}-node
-                port:
-                  number: {{ $values.node.service.port }}
-          - path: /assets/help/.*/rulenode/.*
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $releaseName }}-node
-                port:
-                  number: {{ $values.node.service.port }}
-          - path: /oauth2/.*
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $releaseName }}-node
-                port:
-                  number: {{ $values.node.service.port }}
-          - path: /login/oauth2/.*
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $releaseName }}-node
-                port:
-                  number: {{ $values.node.service.port }}
           - path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service:
-                name: {{ $releaseName }}-webui
+                name: {{ $releaseName }}-node
                 port:
-                  number: {{ $values.webui.service.port }}
-          - path: /.*
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $releaseName }}-webui
-                port:
-                  number: {{ $values.webui.service.port }}
+                  number: {{ $values.node.service.port }}
+          # - path: /api/.*
+          #   pathType: ImplementationSpecific
+          #   backend:
+          #     service:
+          #       name: {{ $releaseName }}-node
+          #       port:
+          #         number: {{ $values.node.service.port }}
+          # - path: /swagger.*
+          #   pathType: ImplementationSpecific
+          #   backend:
+          #     service:
+          #       name: {{ $releaseName }}-node
+          #       port:
+          #         number: {{ $values.node.service.port }}
+          # - path: /webjars.*
+          #   pathType: ImplementationSpecific
+          #   backend:
+          #     service:
+          #       name: {{ $releaseName }}-node
+          #       port:
+          #         number: {{ $values.node.service.port }}
+          # - path: /v2/.*
+          #   pathType: ImplementationSpecific
+          #   backend:
+          #     service:
+          #       name: {{ $releaseName }}-node
+          #       port:
+          #         number: {{ $values.node.service.port }}
+          # - path: /v3/.*
+          #   pathType: ImplementationSpecific
+          #   backend:
+          #     service:
+          #       name: {{ $releaseName }}-node
+          #       port:
+          #         number: {{ $values.node.service.port }}
+          # - path: /static/rulenode/.*
+          #   pathType: ImplementationSpecific
+          #   backend:
+          #     service:
+          #       name: {{ $releaseName }}-node
+          #       port:
+          #         number: {{ $values.node.service.port }}
+          # - path: /assets/help/.*/rulenode/.*
+          #   pathType: ImplementationSpecific
+          #   backend:
+          #     service:
+          #       name: {{ $releaseName }}-node
+          #       port:
+          #         number: {{ $values.node.service.port }}
+          # - path: /oauth2/.*
+          #   pathType: ImplementationSpecific
+          #   backend:
+          #     service:
+          #       name: {{ $releaseName }}-node
+          #       port:
+          #         number: {{ $values.node.service.port }}
+          # - path: /login/oauth2/.*
+          #   pathType: ImplementationSpecific
+          #   backend:
+          #     service:
+          #       name: {{ $releaseName }}-node
+          #       port:
+          #         number: {{ $values.node.service.port }}
+          # - path: /
+          #   pathType: ImplementationSpecific
+          #   backend:
+          #     service:
+          #       name: {{ $releaseName }}-webui
+          #       port:
+          #         number: {{ $values.webui.service.port }}
+          # - path: /.*
+          #   pathType: ImplementationSpecific
+          #   backend:
+          #     service:
+          #       name: {{ $releaseName }}-webui
+          #       port:
+          #         number: {{ $values.webui.service.port }}
     {{- end }}
 {{- end }}

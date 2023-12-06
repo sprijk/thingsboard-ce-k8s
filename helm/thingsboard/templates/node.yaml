@@ -91,42 +91,44 @@ spec:
           - name: METRICS_ENDPOINTS_EXPOSE
             value: "prometheus"
           {{- end }}
+          # - name: TB_QUEUE_TYPE
+          #   value: "kafka"
           - name: TB_QUEUE_TYPE
-            value: "kafka"
-          - name: ZOOKEEPER_ENABLED
-            value: "true"
-          - name: ZOOKEEPER_URL
-            # value: "{{ .Release.Name }}-zookeeper:{{ .Values.kafka.zookeeper.containerPorts.client }}" # ORIGINAL
-            value: zookeeper.bluestar.svc.cluster.local:2181
-          - name: TB_KAFKA_SERVERS
-            # value: "{{ .Release.Name }}-kafka:{{ .Values.kafka.service.ports.client }}" # ORIGINAL
-            value: "kafka-controller-0.kafka-controller-headless.bluestar.svc.cluster.local:9092,kafka-controller-1.kafka-controller-headless.bluestar.svc.cluster.local:9092,kafka-controller-2.kafka-controller-headless.bluestar.svc.cluster.local:9092" # ADDED
-          - name: TB_QUEUE_KAFKA_REPLICATION_FACTOR
-            # value: "{{ .Values.kafka.offsetsTopicReplicationFactor }}" # ORIGINAL
-            value: "1" # ADDED
-          - name: JS_EVALUATOR
-            value: "remote"
-          - name: TRANSPORT_TYPE
-            value: "remote"
+            value: "in-memory"
+          # - name: ZOOKEEPER_ENABLED
+          #   value: "true"
+          # - name: ZOOKEEPER_URL
+          #   # value: "{{ .Release.Name }}-zookeeper:{{ .Values.kafka.zookeeper.containerPorts.client }}" # ORIGINAL
+          #   value: zookeeper.bluestar.svc.cluster.local:2181
+          # - name: TB_KAFKA_SERVERS
+          #   # value: "{{ .Release.Name }}-kafka:{{ .Values.kafka.service.ports.client }}" # ORIGINAL
+          #   value: "kafka-controller-0.kafka-controller-headless.bluestar.svc.cluster.local:9092,kafka-controller-1.kafka-controller-headless.bluestar.svc.cluster.local:9092,kafka-controller-2.kafka-controller-headless.bluestar.svc.cluster.local:9092" # ADDED
+          # - name: TB_QUEUE_KAFKA_REPLICATION_FACTOR
+          #   # value: "{{ .Values.kafka.offsetsTopicReplicationFactor }}" # ORIGINAL
+          #   value: "1" # ADDED
+          # - name: JS_EVALUATOR
+          #   value: "remote"
+          # - name: TRANSPORT_TYPE
+          #   value: "remote"
           - name: HTTP_LOG_CONTROLLER_ERROR_STACK_TRACE
             value: "false"
-          - name: CACHE_TYPE
-            value: "redis"
-          - name: REDIS_HOST
-            # value: "{{ .Release.Name }}-redis-master" # ORIGINAL
-            value: "redis-master.bluestar.svc.cluster.local" # ADDED
+          # - name: CACHE_TYPE
+          #   value: "redis"
+          # - name: REDIS_HOST
+          #   # value: "{{ .Release.Name }}-redis-master" # ORIGINAL
+          #   value: "redis-master.bluestar.svc.cluster.local" # ADDED
           # - name: REDIS_PASSWORD # ORIGINAL
           #   value: "{{ .Values.redis.auth.password }}" # ORIGINAL
-          - name: HTTP_ENABLED # ADDED (see tb-services.yml in aws/microservices)
-            value: "false" # ADDED (see tb-services.yml in aws/microservices)
-          - name: MQTT_ENABLED # ADDED (see tb-services.yml in aws/microservices)
-            value: "false" # ADDED (see tb-services.yml in aws/microservices)
-          - name: COAP_ENABLED # ADDED (see tb-services.yml in aws/microservices)
-            value: "false" # ADDED (see tb-services.yml in aws/microservices)
-          - name: SNMP_ENABLED # ADDED (see tb-services.yml in aws/microservices)
-            value: "false" # ADDED (see tb-services.yml in aws/microservices)
-          - name: LWM2M_ENABLED # ADDED (see tb-services.yml in aws/microservices)
-            value: "false" # ADDED (see tb-services.yml in aws/microservices)
+          # - name: HTTP_ENABLED # ADDED (see tb-services.yml in aws/microservices)
+          #   value: "false" # ADDED (see tb-services.yml in aws/microservices)
+          # - name: MQTT_ENABLED # ADDED (see tb-services.yml in aws/microservices)
+          #   value: "false" # ADDED (see tb-services.yml in aws/microservices)
+          # - name: COAP_ENABLED # ADDED (see tb-services.yml in aws/microservices)
+          #   value: "false" # ADDED (see tb-services.yml in aws/microservices)
+          # - name: SNMP_ENABLED # ADDED (see tb-services.yml in aws/microservices)
+          #   value: "false" # ADDED (see tb-services.yml in aws/microservices)
+          # - name: LWM2M_ENABLED # ADDED (see tb-services.yml in aws/microservices)
+          #   value: "false" # ADDED (see tb-services.yml in aws/microservices)
           - name: JWT_TOKEN_EXPIRATION_TIME
             value: {{ .Values.node.authorization.tokenExpirationTimeSeconds | default 9000 | quote }}
           - name: JWT_REFRESH_TOKEN_EXPIRATION_TIME
