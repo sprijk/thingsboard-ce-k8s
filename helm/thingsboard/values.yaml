@@ -94,7 +94,8 @@ node:
     # type: NodePort # ADDED
     port: 8080
   state:
-    defaultInactivityTimeoutInSec: "600"
+    # defaultInactivityTimeoutInSec: "600" # ORIGINAL
+    defaultInactivityTimeoutInSec: "1800"
   resources:
     {}
     # We usually recommend not to specify default resources and to leave this as a conscious
