@@ -94,7 +94,8 @@ node:
     # type: NodePort # ADDED
     port: 8080
   state:
-    defaultInactivityTimeoutInSec: "600"
+    # defaultInactivityTimeoutInSec: "600" # ORIGINAL
+    defaultInactivityTimeoutInSec: "1800"
   resources:
     {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -132,7 +133,7 @@ jsexecutor:
     #pullPolicy: Always
     #tag: "X.Y.Z"
   # replicaCount: 5 # ORIGINAL
-  replicaCount: 2 # ADDED
+  replicaCount: 0 # ADDED
   podAnnotations: {}
   podSecurityContext: {}
   securityContext: {}
@@ -212,7 +213,7 @@ http:
     #server: docker.io
     #pullPolicy: Always
     #tag: "X.Y.Z"
-  replicaCount: 1
+  replicaCount: 0
   port:
     number: 8082
     protocol: TCP
@@ -282,7 +283,7 @@ webui:
     #server: docker.io
     #pullPolicy: Always
     #tag: "X.Y.Z"
-  replicaCount: 1
+  replicaCount: 0
   port:
     number: 8084
     protocol: TCP
